@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Anukhra X Suit</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('bg-image.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      height: 100vh;
+      padding-bottom: 200px;
+    }
+
+    .step-text {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 4px black;
+    }
+
+    .download-button {
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 8px;
+      background-color: yellow;
+      color: black;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .download-button.active {
+      background-color: green;
+    }
+
+    .step2 {
+      margin-top: 100px;
+    }
+
+    .uid-input {
+      padding: 10px;
+      width: 250px;
+      font-size: 1em;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+    }
+
+    .submit-button {
+      padding: 12px 25px;
+      font-size: 1em;
+      border: none;
+      border-radius: 6px;
+      background-color: yellow;
+      color: black;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-button.active {
+      background-color: green !important;
+      color: white;
+    }
+
+    .warning-text {
+      color: red;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #222;
+      color: white;
+      padding: 25px 35px;
+      border-radius: 12px;
+      display: none;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+      min-width: 300px;
+    }
+
+    .popup.show {
+      display: block;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .popup .green {
+      color: #00ff00;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    .loading {
+      margin-top: 15px;
+      font-size: 1em;
+      color: #00ff00;
+      display: none;
+    }
+
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #00ff00;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 10px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="step-text">Step 1: Download this app</div>
+    <button id="downloadBtn" class="download-button">Download Now</button>
+
+    <div class="step2">
+      <div class="step-text">Step 2: Submit your BGMI or PUBG UID</div>
+      <input type="text" id="uidInput" class="uid-input" placeholder="Enter your UID here" />
+      <button id="submitBtn" class="submit-button">Submit UID</button>
+      <div id="warningText" class="warning-text">Please complete Step 1 first</div>
+    </div>
+  </div>
+
+  <div id="popup" class="popup">
+    <div class="loader"></div>
+    <div id="loadingText" class="loading">Loading...</div>
+  </div>
+
+  <div id="popupSuccess" class="popup">
+    <div class="green">Submit successful</div>
+    <button onclick="startFinalLoading()">OK</button>
+  </div>
+
+  <div id="popup2" class="popup">
+    <div class="green">X-Suit has been sent to your ID. It will arrive within 3 hours.</div>
+  </div>
+
+  <script>
+    const downloadBtn = document.getElementById('downloadBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const uidInput = document.getElementById('uidInput');
+    const popup = document.getElementById('popup');
+    const popup2 = document.getElementById('popup2');
+    const popupSuccess = document.getElementById('popupSuccess');
+    const loadingText = document.getElementById('loadingText');
+    const warningText = document.getElementById('warningText');
+    const loader = document.querySelector('.loader');
+
+    let step1Completed = false;
+    let playStoreLink = "https://rooter.sng.link/D46b2/p641?pcid=2085839952";
+
+    downloadBtn.addEventListener('click', () => {
+      window.open(playStoreLink, '_blank');
+      setTimeout(() => {
+        downloadBtn.classList.add('active');
+        step1Completed = true;
+      }, 3000);
+    });
+
+    submitBtn.addEventListener('click', () => {
+      const uid = uidInput.value.trim();
+      if (uid === "") {
+        alert("Please enter your UID");
+        return;
+      }
+      if (!step1Completed) {
+        warningText.style.display = 'block';
+        return;
+      } else {
+        warningText.style.display = 'none';
+      }
+      popup.classList.add('show');
+      loader.style.display = 'block';
+      loadingText.style.display = 'block';
+
+      setTimeout(() => {
+        popup.classList.remove('show');
+        loader.style.display = 'none';
+        loadingText.style.display = 'none';
+        popupSuccess.classList.add('show');
+      }, 4000);
+    });
+
+    function startFinalLoading() {
+      popupSuccess.classList.remove('show');
+      submitBtn.classList.add('active');
+      popup.classList.add('show');
+      loader.style.display = 'block';
+      loadingText.style.display = 'block';
+
+      setTimeout(() => {
+        popup.classList.remove('show');
+        loader.style.display = 'none';
+        loadingText.style.display = 'none';
+        popup2.classList.add('show');
+        setTimeout(() => {
+          popup2.classList.remove('show');
+        }, 4000);
+      }, 9000);
+    }
+  </script>
+</body>
+</html>
